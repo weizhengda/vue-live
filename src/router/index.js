@@ -17,7 +17,7 @@ export default new Router({
       path: '/live',
       name: ' live',
       component: Live,
-      meta: {keepAlive: true}
+      meta: {keepAlive: false}
     }
   ]
 })
