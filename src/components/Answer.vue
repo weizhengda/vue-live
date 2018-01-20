@@ -30,7 +30,6 @@ export default {
   mounted:function(){
       if(this.display){
           this.timer();
-          console.log(123);
       }
   },
   methods:{
@@ -40,6 +39,8 @@ export default {
         var timer = window.setInterval(function(){
             that.time--;
             if(that.time <= 0){
+               // 结束答题
+               that.answered = true; 
                window.clearInterval(timer);
             }
         },1000)
