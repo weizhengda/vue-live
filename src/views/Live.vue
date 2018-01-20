@@ -2,11 +2,13 @@
    <div class="live">
        <player></player>
        <answer></answer>
+       <barrage></barrage>
    </div>
 </template>
 <script>
 import Player from '@/components/Player.vue'
 import Answer from '@/components/Answer.vue'
+import Barrage from '@/components/Barrage.vue'
 export default {
       data() {
         return {
@@ -15,7 +17,8 @@ export default {
       },
       components:{
           'player': Player,
-          'answer': Answer
+          'answer': Answer,
+          'barrage': Barrage
       }
 }
 </script>
