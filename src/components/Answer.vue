@@ -76,7 +76,7 @@ export default {
           var that = this;
           setTimeout(function(){
              that.Loop();
-          },1000*3)
+          },1000*6)
       },
       // 单题答题倒计时
       timer:function(){
