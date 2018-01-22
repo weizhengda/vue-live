@@ -127,11 +127,12 @@ export default {
         // 延时开启下一题
         setTimeout(function(){
         that.display = true;
+        that.answered = false;
         that.index++;
         if(that.index <= 1){
             that.Loop();
         }
-        },1000*10);
+        },1000*20);
       }
   }
 }
