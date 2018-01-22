@@ -6,12 +6,13 @@
          <span>364503剩余</span>
       </div>
       <div class="question" v-if="display">
-        <h3 v-for="item in question">{{item.title}}</h3>
+        <h3 v-text="question[index].title"></h3>
         <ul>
-          <li v-for = "item in question.options">{{item.option}}</li>
-          <li  @click="answer" data-answer="true">+86</li>
+          <li v-for = "(item) in question[index].options" @click="answer" :data-answer="item.result">
+              {{item.option}}</li>
+          <!-- <li  @click="answer" data-answer="true">+86</li>
           <li  @click="answer" data-answer="false">+61</li>
-          <li  @click="answer" data-answer="false">+886</li>
+          <li  @click="answer" data-answer="false">+886</li> -->
         </ul>
       </div>
   </div>
@@ -31,13 +32,33 @@ export default {
                     "title":"中国大陆的国际区号是？",
                     "options":[
                         {
-                            "option":"+86"
+                            "option":"+86",
+                            "result": "true"
                         },
                         {
-                             "option":"+61"
+                             "option":"+61",
+                            "result": "false"
                         },
                         {
-                             "option":"+886"
+                             "option":"+886",
+                            "result": "false"
+                        }
+                    ]
+                },
+                {
+                    "title":"这是一个弱智的问题？",
+                    "options":[
+                        {
+                            "option":"傻逼",
+                            "result": "false"
+                        },
+                        {
+                             "option":"弱智",
+                            "result": "true"
+                        },
+                        {
+                             "option":"智障",
+                            "result": "false"
                         }
                     ]
                 }
@@ -67,16 +88,19 @@ export default {
       },
       // 处理单道题目  
       answer:function(event){
+          console.log(event);
+          console.log(event.target.dataset.answer);  // 这个才是答案的正确与否   是后台给你的 你无权定义
           var answer = event.currentTarget.getAttribute("data-answer");
-          if(!this.answered){
-            if(answer == 'true'){
-              this.answered = true;
-              event.currentTarget.setAttribute("class","true");
-            }else{
-              this.answered = true;
-              event.currentTarget.setAttribute("class","false");
-           }
-          }
+          this.index++;  // 这李只需要判断  是否是最后一题  最后一题  就不要++了
+        //   if(!this.answered){
+        //     if(answer == 'true'){
+        //       this.answered = true;
+        //       event.currentTarget.setAttribute("class","true");
+        //     }else{
+        //       this.answered = true;
+        //       event.currentTarget.setAttribute("class","false");
+        //    }
+        //   }
       }
   }
 }
