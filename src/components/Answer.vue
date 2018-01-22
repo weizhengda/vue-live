@@ -2,7 +2,7 @@
   <div id="answer">
       <div class="top">
          <span>用户昵称</span>
-         <i>{{time}}s</i>
+         <i v-if="display">{{time}}s</i>
          <span>364503剩余</span>
       </div>
       <div class="question" v-if="display">
@@ -23,9 +23,8 @@ export default {
   name: 'Answer',
   data(){
     return{
-        app:'',
-        time:'',
-        index:0,
+        time:'', // 单题答题倒计时
+        index:0, // 第几道题
         // 答题集
         question:[
                 {
@@ -63,44 +62,76 @@ export default {
                     ]
                 }
             ],
-        display:true,
+        display:false,
         answered:false
     }
   },
   mounted:function(){
-      console.log(this.question)
-      if(this.display){
-          this.timer();
-      }
+    // 开启前等待
+      this.pre();
   },
   methods:{
+      // 答题前等待
+      pre:function(){
+          var that = this;
+          setTimeout(function(){
+             that.Loop();
+          },1000*3)
+      },
+      // 单题答题倒计时
       timer:function(){
         this.time = 10;
         var that = this;
         var timer = window.setInterval(function(){
             that.time--;
             if(that.time <= 0){
-               // 结束答题
+               // 结束单题答题
                that.answered = true; 
                window.clearInterval(timer);
+               // 暂停答题
+               that.pause();
             }
         },1000)
       },
-      // 处理单道题目  
+      // 回答单道题目  
       answer:function(event){
-          console.log(event);
-          console.log(event.target.dataset.answer);  // 这个才是答案的正确与否   是后台给你的 你无权定义
+          console.log(event.target.dataset.answer);
           var answer = event.currentTarget.getAttribute("data-answer");
-          this.index++;  // 这李只需要判断  是否是最后一题  最后一题  就不要++了
-        //   if(!this.answered){
-        //     if(answer == 'true'){
-        //       this.answered = true;
-        //       event.currentTarget.setAttribute("class","true");
-        //     }else{
-        //       this.answered = true;
-        //       event.currentTarget.setAttribute("class","false");
-        //    }
-        //   }
+          if(!this.answered){
+            if(answer == 'true'){
+              this.answered = true;
+              event.currentTarget.setAttribute("class","true");
+            }else{
+              this.answered = true;
+              event.currentTarget.setAttribute("class","false");
+           }
+          }
+      },
+      // 控制单题显示
+      Loop:function(){
+          var that = this;
+          // 显示题目
+          that.display = true;
+          // 开启单题答题倒计时
+          if(that.display){
+             that.timer();
+          }
+      },
+     // 答题间隔
+      pause:function(){
+        var that = this;
+        // 延时隐藏答题卡
+        setTimeout(function(){
+            that.display = false;
+        },1000*10)
+        // 延时开启下一题
+        setTimeout(function(){
+        that.display = true;
+        that.index++;
+        if(that.index <= 1){
+            that.Loop();
+        }
+        },1000*10);
       }
   }
 }
@@ -108,7 +139,6 @@ export default {
 <style scope>
     #answer{
         width:100%;
-        height:35%;
         position:absolute;
         background:#fefefe;
     }
