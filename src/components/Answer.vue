@@ -6,8 +6,9 @@
          <span>364503剩余</span>
       </div>
       <div class="question" v-if="display">
-        <h3>中国大陆的国际区号是？</h3>
+        <h3 v-for="item in question">{{item.title}}</h3>
         <ul>
+          <li v-for = "item in question.options">{{item.option}}</li>
           <li  @click="answer" data-answer="true">+86</li>
           <li  @click="answer" data-answer="false">+61</li>
           <li  @click="answer" data-answer="false">+886</li>
@@ -23,11 +24,30 @@ export default {
     return{
         app:'',
         time:'',
+        index:0,
+        // 答题集
+        question:[
+                {
+                    "title":"中国大陆的国际区号是？",
+                    "options":[
+                        {
+                            "option":"+86"
+                        },
+                        {
+                             "option":"+61"
+                        },
+                        {
+                             "option":"+886"
+                        }
+                    ]
+                }
+            ],
         display:true,
         answered:false
     }
   },
   mounted:function(){
+      console.log(this.question)
       if(this.display){
           this.timer();
       }
@@ -45,6 +65,7 @@ export default {
             }
         },1000)
       },
+      // 处理单道题目  
       answer:function(event){
           var answer = event.currentTarget.getAttribute("data-answer");
           if(!this.answered){
