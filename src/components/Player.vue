@@ -5,6 +5,8 @@
         :source="aplayer.source" 
         :vid="aplayer.vid"
         :autoplay="aplayer.autoplay"
+        :x5_type="aplayer.x5_type" 
+        :x5_fullscreen="aplayer.x5_fullscreen"
         :useH5Prism="aplayer.useH5Prism"
         :skinLayout = "aplayer.skinLayout"
         :playauth="aplayer.playauth" ref="player">
@@ -18,15 +20,15 @@ export default {
    data() {
     return {
       aplayer: {
-        source: "http://static.smartisanos.cn/common/video/t1-ui.mp4",
+        source: "http://static.smartisanos.cn/common/video/t1-ui.mp4", // 视频源
         vid: "8db6e5c7ff5f4257b41e2487ec61d592",
-        autoplay: true,
-	      isLive:true,
-        useH5Prism:true,
-	      useFlashPrism:false,
-	      cover: 'http://cdnoss.youkouyang.com/cover.png',
-        x5_type:'h5',
-        x5_fullscreen:true,
+        autoplay: true, // 播放器是否自动播放，在移动端autoplay属性会失效
+	      isLive:true, // 播放内容是否为直播，直播时会禁止用户拖动进度条
+        useH5Prism:true, // 指定使用H5播放器
+	      useFlashPrism:false, // 指定使用Flash播放器
+	      cover: 'http://cdnoss.youkouyang.com/cover.png', // 播放器默认封面图片
+        x5_type:"h5", // 声明启用同层H5播放器
+        x5_fullscreen:false, // 声明视频播放时是否进入到TBS的全屏模式
         skinLayout:[
           {name:"bigPlayButton", align:"blabs", x:"70", y:"150"},
           {name: "H5Loading", align: "cc"}
